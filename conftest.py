@@ -2,7 +2,7 @@ import pytest
 import string
 import random
 import requests
-from  endpoints import BASE_URL
+import endpoints
 
 @pytest.fixture()
 #Уникальные данные для пользователя
@@ -23,7 +23,7 @@ def user_data():
 @pytest.fixture()
 def created_user(user_data):
     
-    response = requests.post(f"{BASE_URL}/auth/register", data=user_data)
+    response = requests.post(f"{endpoints.BASE_URL}/auth/register", data=user_data)
     
     user_response = response.json()
     
@@ -45,4 +45,4 @@ def delete_user():
     for token in access_tokens:
         clean_token = token.replace("Bearer ", "")
         headers = {"Authorization": f"Bearer {clean_token}"}
-        requests.delete(f"{BASE_URL}/auth/user", headers=headers)
+        requests.delete(f"{endpoints.BASE_URL}/auth/user", headers=headers)
